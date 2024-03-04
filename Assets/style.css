@@ -1,0 +1,20 @@
+#timer {
+    float:right
+}
+
+#started {
+    width: 50%;
+    text-align: center;
+    background-color: aqua;
+}
+
+main {
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#questions{
+    background-color: blueviolet;
+    display: none;
+}
