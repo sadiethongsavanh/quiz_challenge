@@ -1,5 +1,9 @@
-#timer {
+#timer_ {
     float:right
+}
+
+#high-score_ {
+    float:left
 }
 
 #started {
@@ -15,6 +19,53 @@ main {
 }
 
 #questions{
-    background-color: blueviolet;
+    background-color: white;
+    display: none;
+}
+
+#answers{
+    text-align: left;
+    width: 50%;
+}
+
+button.btAnswers{
+    display: block;
+    margin: 10px;
+    width: 100%;
+    text-align: left;
+    background-color: #ffb0fe;
+    padding: 10px;
+    box-shadow: 1px;
+    border-radius: 10px;
+    font-size: 2em;
+    font-family: "Times New Roman", Times, serif;
+}
+
+button.btAnswers:hover{
+    background-color: #ff6bd6;
+}
+
+#correct{
+    display: none;
+}
+
+#wrong{
+    display: none;
+}
+
+#end-of-questions{
+    display: none;
+}
+
+ol{
+    text-align: left;
+}
+
+#buttons{
+    text-align: left;
+   
+}
+
+#high-scores{
     display: none;
 }

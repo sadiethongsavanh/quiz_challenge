@@ -7,23 +7,57 @@
     </head>
 <body>
 <header>
-   <div id="timer">1</div>
-     <br>
+    <!-- <div id="high-score_">Highest Score<div id="high-score"></div></div> -->
+    <div id="timer_">Timer<div id="timer"></div></div>
+    <br>
 </header>
 <main>
     <div id="started">
         <h1>Welcome to the quiz</h1>
         <p>
-            THEN a timer starts and I am presented with a question
-            WHEN I answer a question
-            THEN I am presented with another question
-            WHEN I answer a question incorrectly
+            Read each question carefully and choose the best answer to each one. Once finished,
+            you can check each question to see your answer selected is correct or incorrect.
         </p>
         <button id="start">Start Quiz</button>
     </div>
     <div id="questions">
         <h1 id="question">Whats is</h1>
-        <ul id="answers">number 2</ul>
+        <div id="answers">number 2</div>
+
+        <div id="correct">
+            <hr>
+            <h2>Correct!</h2>
+        </div>
+
+        <div id="wrong">
+            <hr>
+            <h2>Wrong!</h2>
+        </div>
+    </div>
+    <div id="end-of-questions">
+        <h1>All done!</h1>
+        <h2>The final score is: <span id="high-score"></span></h2>
+        <!-- <span id="high-score"></span> -->
+        <div id="">
+            <label for="initials">Enter initials:</label>
+            <input name="initials" id="initials" type="text">
+            <button id="initials-submit">Submit</button>
+        </div>
+    </div>
+    <div id="high-scores">
+        <h1>High Scores</h1>
+        <div id="">
+            <ol id="">
+                <li>
+                    <span id="output-initials">mp</span>
+                    <span id="output-high-score">15</span>
+                </li>
+            </ol>
+            <div id="buttons">
+                <button id="go-back">Go Back</button>
+                <button id="clear-high-score">Clear Highscores</button>
+            </div>
+        </div>
     </div>
 </main>
 
