@@ -8,7 +8,7 @@
 
 #started {
     width: 50%;
-    text-align: center;
+    margin: 0 auto;
     background-color: aqua;
 }
 
@@ -20,7 +20,7 @@ main {
 
 #questions{
     background-color: white;
-    display: none;
+    /* display: none; */
 }
 
 #answers{
@@ -54,7 +54,7 @@ button.btAnswers:hover{
 }
 
 #end-of-questions{
-    display: none;
+    /* display: none; */
 }
 
 ol{
@@ -63,9 +63,12 @@ ol{
 
 #buttons{
     text-align: left;
-   
+
 }
 
 #high-scores{
     display: none;
+}
+li{
+    list-style-type: none;
 }

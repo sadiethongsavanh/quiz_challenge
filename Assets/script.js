@@ -6,7 +6,7 @@ $(document).ready(function(){
     let questionDisplay = document.getElementById("question");
     let questionsDisplay = document.getElementById("questions");
     let answersDisplay = document.getElementById("answers");
-    let seconds = 60;
+    let seconds = 80;
     let submitBtn = document.getElementById("submit")
     let increment = 0
     let correctDisplay = document.getElementById("correct")
@@ -20,40 +20,51 @@ $(document).ready(function(){
     let high_scores = document.getElementById("high-scores")
     let output_initials = document.getElementById("output-initials")
     let output_high_score = document.getElementById("output-high-score")
+    let go_back = document.getElementById("go-back")
+    let clear_high_score = document.getElementById("clear-high-score")
+    let subtract_time = false
+    let end_of_game = document.getElementById("end")
+    let all_scores = document.getElementById("all-scores")
+    let all_scores_ = [];
     // let answer= document.getElementsByClassName("btAnswers");
-    var answer = document.querySelectorAll(".btAnswers");
+    let answer = document.querySelectorAll(".btAnswers");
+    let questLength= questions.length
+    let sec;
+
 
     function endOfQuiz(){
+        seconds = 80;
+        all_scores_.push(highScore)
+
+        questionsDisplay.style.display = "none"
         endOfQuestions.style.display = "block"
-        submit_initials.addEventListener("click",function(){
-            // console.log("initials")
-            initials_ = input_initials.value
-            console.log("initials",initials_)
-            endOfQuestions.style.display = "none"
-            high_scores.style.display = "block"
-            output_initials.innerHTML = initials_
-            output_high_score.innerHTML = highScore
+
+        go_back.addEventListener("click",function(){
+            init()
+            //startQuiz()
         })
     }
 
     function nextQuestion(increment_){
-        let questLength= questions.length
-        console.log("length",questLength)
-        console.log("increment",increment_)
+        wrongDisplay.style.display = "none";
+        correctDisplay.style.display = "none";
+        //console.log("length",questLength)
+        //console.log("increment",increment_)
         if(increment_ === questLength){
-            questionsDisplay.style.display = "none"
-            //Call end of quiz here
-            endOfQuiz()
-            // endOfQuestions.style.display = "block"
             scoreDisplay.innerHTML = highScore
-           return
+            timer.innerHTML = 0+""
+            console.log("sec =", sec)
+            clearInterval(sec);
+            sec = null;
+            increment = 0;
+            return endOfQuiz()
         }
         // console.log("next question",increment)
         //$("#answers").empty()
         answersDisplay.innerHTML=""
         //TODO: render questions and answers
         questionDisplay.innerHTML = questions[increment_].question
-        for (key in questions[increment_].choices) {
+        for (let key in questions[increment_].choices) {
             // console.log("question=",questions[increment_].choices[key])
             const button = document.createElement("button");
             button.classList.add("btAnswers");
@@ -72,39 +83,95 @@ $(document).ready(function(){
                 else{
                     // console.log("incorrect")
                     wrongDisplay.style.display = "block"
+                    subtract_time = true
                 }
                 increment++
-                nextQuestion(increment)
-            
+                const buttons = document.getElementsByTagName("button");
+                for (const button of buttons) {
+                    button.disabled = true;
+                }
+                setTimeout(function() {
+                    for (const button of buttons) {
+                        button.disabled =false;
+                    }
+                    nextQuestion(increment)
+                }, 2000);
+
             })
             button.innerHTML = questions[increment_].choices[key]
             answersDisplay.appendChild(button)
             // console.log("button",button)
         }
-        //TODO: render the radio buttons to choose
-        //TODO: compare answers
-        //TODO: render the next question
-        //TODO: calculate score
 
     }
 
     function startQuiz(){
+        sec= setInterval(
+            () => {
+                if(!subtract_time){
+                    seconds--
+                }
+                else{
+                    seconds -= 10
+                    subtract_time = false
+                }
+
+
+                if(seconds < 1){
+                    scoreDisplay.innerHTML = highScore
+                    timer.innerHTML = seconds
+
+                    clearInterval(sec);
+                    sec = null;
+                    timer.innerHTML = 0+""
+                    return endOfQuiz()
+                }
+                timer.innerHTML = seconds
+            },
+            1000
+        );
         started.style.display = "none"
-        questionsDisplay.style.display = "block"
-        // console.log("start quiz",increment)
+        if(questionsDisplay.style.display === "none"){
+            questionsDisplay.style.display = "block"
+        }
+        // console.log("start quiz",questionsDisplay.style.display )
+        seconds = 70;
         nextQuestion(increment)
     }
 
+    function init(){
+        high_scores.style.display = "none"
+        end_of_game.style.display = "none"
+        questionsDisplay.style.display = "none"
+        endOfQuestions.style.display = "none"
+        started.style.display = "block"
+        console.log("init")
+        highScore = 0
+    }
+    submit_initials.addEventListener("click",function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        // console.log("initials")
+        initials_ = input_initials.value
+        console.log("initials",initials_)
+        endOfQuestions.style.display = "none"
+        high_scores.style.display = "block"
+        output_initials.innerHTML = initials_
+        output_high_score.innerHTML = highScore+""
+
+        console.log("scores_array",all_scores_)
+        all_scores.innerHTML = all_scores_.map(score => {
+            return `<li class="scores">${ score }</li>`;
+        }).join('');
+    })
+    clear_high_score.addEventListener("click",function(){
+        all_scores.innerHTML = '';
+        all_scores_=[];
+    })
     startButton.addEventListener("click",function(){
     // console.log("work")
-    startQuiz()
-    let sec= setInterval(
-        () => {
-            seconds--
-            timer.innerHTML = seconds
-        },
-        1000
-    );
+        startQuiz()
    })
-   //console.log("increment",increment)
+    init();
+   // console.log("increment",increment)
 });
